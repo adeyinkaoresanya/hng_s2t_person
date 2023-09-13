@@ -9,8 +9,8 @@ const createUser = async (req, res) => {
   if (!exist) {
 
     const newUser = await userService.create({ ...userRequest});
-    // res.status(200).json(newUser);
-    res.status(200).json({ message: newUser });
+  
+    res.status(201).json({ message: newUser });
   } else {
     res.status(400).json({ message: "User already exist" });
   }
@@ -23,7 +23,7 @@ const getUser = async (req, res) => {
   // check if the user is in the db
   const user = await userService.getUserById(user_id);
   if (!user) {
-    res.status(401).json({ message: "User not found" });
+    res.status(400).json({ message: "User not found" });
     return;
   }
   res.status(200).json({ message: user });
@@ -41,7 +41,7 @@ const updateUserById = async (req, res) => {
   console.log(user)
   
   if (!user) {
-    res.status(401).json({ message: "User not found" });
+    res.status(400).json({ message: "User not found" });
     return;
   }
   let updatedUser = await userService.updateUserById(user_id, name, email, updatedAt)
@@ -55,7 +55,7 @@ const deleteUser = async (req, res) => {
   const user = await userService.deleteUserById(user_id);
   
   if (!user) {
-    res.status(401).json({ message: "User not found" });
+    res.status(400).json({ message: "User not found" });
     return;
   }
   res.status(200).json({ message: "User has been deleted successfully" });
